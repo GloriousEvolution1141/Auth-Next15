@@ -1,6 +1,6 @@
 # App Dental
 
-Aaplicativo web con **Next.js** y **Supabase**.
+Aplicativo web con **Next.js** y **Supabase**.
 
 ## Características
 - Autenticación con cookies (`supabase-ssr`)
