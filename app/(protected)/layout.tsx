@@ -12,7 +12,7 @@ export default async function ProtectedLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // 🔒 Protección de sesión
+  //Protección de sesión
   const supabase = await createClient();
   const { data, error } = await supabase.auth.getClaims();
 
@@ -20,7 +20,7 @@ export default async function ProtectedLayout({
     redirect("/auth/login");
   }
 
-  // 🧱 Layout visual que ya tenías
+  //Layout visual que ya tenías
   return (
     <main className="min-h-screen flex flex-col items-center">
       <div className="flex-1 w-full flex flex-col gap-20 items-center">
