@@ -1,20 +1,35 @@
 import { updateSession } from "@/lib/supabase/middleware";
-import { type NextRequest } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  return await updateSession(request);
+  // Mantiene sesión sincronizada
+  const response = await updateSession(request);
+
+  // Define tus rutas protegidas
+  const protectedRoutes = [
+    "/protected",
+    // "/dashboard",
+    // "/pacientes",
+    // "/configuracion",
+  ];
+  const isProtected = protectedRoutes.some((path) =>
+    request.nextUrl.pathname.startsWith(path)
+  );
+
+  // Comprueba si hay sesión activa
+  const hasSession = request.cookies.get("sb-access-token");
+
+  if (isProtected && !hasSession) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/auth/login";
+    return NextResponse.redirect(url);
+  }
+
+  return response;
 }
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - images - .svg, .png, .jpg, .jpeg, .gif, .webp
-     * Feel free to modify this pattern to include more paths.
-     */
     "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };
