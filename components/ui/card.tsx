@@ -10,7 +10,7 @@ const Card = React.forwardRef<
     ref={ref}
     className={cn(
       "rounded-xl border bg-card text-card-foreground shadow",
-      className,
+      className
     )}
     {...props}
   />
@@ -61,6 +61,21 @@ const CardContent = React.forwardRef<
 ));
 CardContent.displayName = "CardContent";
 
+const CardAction = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(
+      "flex items-center justify-end p-4 pt-0 border-t border-muted",
+      className
+    )}
+    {...props}
+  />
+));
+CardAction.displayName = "CardAction";
+
 const CardFooter = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -80,4 +95,5 @@ export {
   CardTitle,
   CardDescription,
   CardContent,
+  CardAction,
 };

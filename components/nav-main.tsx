@@ -127,7 +127,7 @@ export function NavMain({ items, basePath = "" }: NavMainProps) {
               {hasChildren && (
                 <div
                   className={cn(
-                    "ml-5 mt-1 space-y-1 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]",
+                    "ml-5 mt-1 space-y-1 transition-all duration-500 ease-&lsqb;cubic-bezier(0.4,0,0.2,1)&rsqb;",
                     isOpen && !isCollapsed
                       ? "max-h-[500px] opacity-100"
                       : "max-h-0 opacity-0 overflow-hidden"

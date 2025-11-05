@@ -34,7 +34,7 @@ const data = {
   },
   teams: [
     {
-      name: "Clínica Dental Sonrisa Plus",
+      name: "Clínica Dental",
       logo: GalleryVerticalEnd,
       plan: "Premium",
     },
