@@ -1,50 +1,56 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import React from "react";
+import Link from "next/link";
 import {
   Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
   BreadcrumbList,
+  BreadcrumbItem,
   BreadcrumbPage,
   BreadcrumbSeparator,
+  BreadcrumbLink,
 } from "@/components/ui/breadcrumb";
+import { useSelectedLayoutSegments } from "next/navigation";
 
-// Función auxiliar para formatear nombres de segmentos
+// Nombres personalizados
+const breadcrumbMap: Record<string, string> = {
+  pacientes: "Pacientes",
+  lista: "Lista de pacientes",
+  nuevo: "Registrar paciente",
+  historial: "Historial clínico",
+};
+
 function formatSegment(segment: string) {
-  return segment
-    .replace(/-/g, " ") // reemplaza guiones por espacios
-    .replace(/\b\w/g, (c) => c.toUpperCase()); // capitaliza cada palabra
+  return (
+    breadcrumbMap[segment.toLowerCase()] ||
+    segment.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
+  );
 }
 
 export function DynamicBreadcrumb() {
-  const pathname = usePathname();
-  const segments = pathname.split("/").filter(Boolean);
+  const segments = useSelectedLayoutSegments(); // segmentos exactos del layout
+  if (!segments || segments.length === 0) return null;
 
   return (
     <Breadcrumb>
       <BreadcrumbList>
-        <BreadcrumbItem>
-          <BreadcrumbLink href="/dashboard">Inicio</BreadcrumbLink>
-        </BreadcrumbItem>
-
         {segments.map((segment, index) => {
           const href = "/" + segments.slice(0, index + 1).join("/");
           const isLast = index === segments.length - 1;
 
           return (
-            <div key={href} className="flex items-center">
-              <BreadcrumbSeparator />
+            <React.Fragment key={href}>
+              {index > 0 && <BreadcrumbSeparator />}
               <BreadcrumbItem>
                 {isLast ? (
                   <BreadcrumbPage>{formatSegment(segment)}</BreadcrumbPage>
                 ) : (
-                  <BreadcrumbLink href={href}>
-                    {formatSegment(segment)}
+                  <BreadcrumbLink asChild>
+                    <Link href={href}>{formatSegment(segment)}</Link>
                   </BreadcrumbLink>
                 )}
               </BreadcrumbItem>
-            </div>
+            </React.Fragment>
           );
         })}
       </BreadcrumbList>

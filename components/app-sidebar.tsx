@@ -41,9 +41,8 @@ const data = {
   navMain: [
     {
       title: "Inicio",
-      url: "/",
+      url: "/home",
       icon: Home,
-      isActive: false,
     },
     {
       title: "Pacientes",
