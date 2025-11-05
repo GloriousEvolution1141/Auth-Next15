@@ -1,18 +1,25 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { DeployButton } from "@/components/deploy-button";
-import { EnvVarWarning } from "@/components/env-var-warning";
-import { AuthButton } from "@/components/auth-button";
-import { ThemeSwitcher } from "@/components/theme-switcher";
 import { hasEnvVars } from "@/lib/utils";
-import Link from "next/link";
+
+import { AppSidebar } from "@/components/app-sidebar";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
+import { Separator } from "@/components/ui/separator";
+import { DynamicBreadcrumb } from "@/components/dynamic-breadcrumb";
+import { AuthButton } from "@/components/auth-button";
+import { EnvVarWarning } from "@/components/env-var-warning";
+import { ThemeSwitcher } from "@/components/theme-switcher";
 
 export default async function ProtectedLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  //Protección de sesión
+  // Protección con Supabase
   const supabase = await createClient();
   const { data, error } = await supabase.auth.getClaims();
 
@@ -20,39 +27,27 @@ export default async function ProtectedLayout({
     redirect("/auth/login");
   }
 
-  //Layout visual que ya tenías
   return (
-    <main className="min-h-screen flex flex-col items-center">
-      <div className="flex-1 w-full flex flex-col gap-20 items-center">
-        <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-          <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
-            <div className="flex gap-5 items-center font-semibold">
-              {/* Ejemplo: <Link href="/dashboard">Inicio</Link> */}
-              {/* <Link href="/dashboard">Inicio</Link> */}
-              <ThemeSwitcher />
-              {/* <Link href="/pacientes">Pacientes</Link> */}
-            </div>
-            {!hasEnvVars ? <EnvVarWarning /> : <AuthButton />}
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
+        <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+          <div className="flex items-center gap-2 px-4">
+            <SidebarTrigger className="-ml-1" />
+            <Separator orientation="vertical" className="mr-2 h-4" />
+            <DynamicBreadcrumb />
           </div>
-        </nav>
-        <div className="flex-1 flex flex-col gap-20 max-w-5xl p-5">
+
+          <div className="flex items-center gap-4 ml-auto">
+            {!hasEnvVars ? <EnvVarWarning /> : <AuthButton />}
+            <ThemeSwitcher />
+          </div>
+        </header>
+
+        <main className="m-5 lg:mx-20 lg:my-5 flex-1 overflow-auto">
           {children}
-        </div>
-        {/* <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-8">
-          <p>
-            Powered by{" "}
-            <a
-              href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-              target="_blank"
-              className="font-bold hover:underline"
-              rel="noreferrer"
-            >
-              Supabase
-            </a>
-          </p>
-          <ThemeSwitcher />
-        </footer> */}
-      </div>
-    </main>
+        </main>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }
