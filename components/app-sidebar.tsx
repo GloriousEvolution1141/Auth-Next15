@@ -2,9 +2,16 @@
 
 import * as React from "react";
 import {
-  AudioWaveform,
+  Home,
+  Users,
+  Calendar,
+  ClipboardList,
+  Album,
+  Settings,
+  FileText,
+  BarChart3,
+  UserCog,
   GalleryVerticalEnd,
-  SquareTerminal,
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
@@ -26,29 +33,143 @@ const data = {
   },
   teams: [
     {
-      name: "Acme Inc",
+      name: "Clínica Dental Sonrisa Plus",
       logo: GalleryVerticalEnd,
-      plan: "Enterprise",
+      plan: "Premium",
     },
   ],
   navMain: [
     {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
-      isActive: true,
+      title: "Inicio",
+      url: "/",
+      icon: Home,
+      isActive: false,
+    },
+    {
+      title: "Pacientes",
+      url: "/pacientes",
+      icon: Users,
       items: [
         {
-          title: "Pacientes",
-          url: "/pacientes",
+          title: "Lista de pacientes",
+          url: "/pacientes/lista",
         },
         {
-          title: "Odontograma",
-          url: "/dashboard",
+          title: "Registrar paciente",
+          url: "/pacientes/nuevo",
         },
         {
-          title: "Configuración",
-          url: "#",
+          title: "Historial clínico",
+          url: "/pacientes/historial",
+        },
+      ],
+    },
+    {
+      title: "Citas",
+      url: "/citas",
+      icon: Calendar,
+      items: [
+        {
+          title: "Calendario",
+          url: "/citas/calendario",
+        },
+        {
+          title: "Agendar cita",
+          url: "/citas/nueva",
+        },
+        {
+          title: "Citas pasadas",
+          url: "/citas/historial",
+        },
+      ],
+    },
+    {
+      title: "Odontograma",
+      url: "/odontograma",
+      icon: Album,
+      items: [
+        {
+          title: "Odontograma actual",
+          url: "/odontograma/actual",
+        },
+        {
+          title: "Historial de tratamientos",
+          url: "/odontograma/historial",
+        },
+      ],
+    },
+    {
+      title: "Tratamientos",
+      url: "/tratamientos",
+      icon: ClipboardList,
+      items: [
+        {
+          title: "Lista de tratamientos",
+          url: "/tratamientos/lista",
+        },
+        {
+          title: "Nuevo tratamiento",
+          url: "/tratamientos/nuevo",
+        },
+      ],
+    },
+    {
+      title: "Reportes",
+      url: "/reportes",
+      icon: BarChart3,
+      items: [
+        {
+          title: "Financieros",
+          url: "/reportes/financieros",
+        },
+        {
+          title: "Pacientes atendidos",
+          url: "/reportes/pacientes",
+        },
+      ],
+    },
+    {
+      title: "Configuración",
+      url: "/configuracion",
+      icon: Settings,
+      items: [
+        {
+          title: "Usuarios y roles",
+          url: "/configuracion/usuarios",
+        },
+        {
+          title: "Perfil del doctor",
+          url: "/configuracion/perfil",
+        },
+      ],
+    },
+    {
+      title: "Administración",
+      url: "/admin",
+      icon: UserCog,
+      items: [
+        {
+          title: "Gestión de personal",
+          url: "/admin/personal",
+        },
+        {
+          title: "Logs del sistema",
+          url: "/admin/logs",
+        },
+      ],
+    },
+    {
+      title: "Documentos",
+      url: "/documentos",
+      icon: FileText,
+      items: [
+        {
+          title: "Consentimientos informados",
+          url: "/documentos/consentimientos",
+        },
+        {
+          title: "Recetas y certificados",
+          url: "/documentos/recetas",
         },
       ],
     },
