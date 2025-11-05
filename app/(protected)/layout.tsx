@@ -36,15 +36,13 @@ export default async function ProtectedLayout({
           <Separator orientation="vertical" className="mr-2 h-4" />
           <DynamicBreadcrumb />
 
-          {/* <div className="flex items-center gap-4 ml-auto">
-            {!hasEnvVars ? <EnvVarWarning /> : <AuthButton />}
+          <div className="flex items-center gap-4 ml-auto">
+            {/* {!hasEnvVars ? <EnvVarWarning /> : <AuthButton />} */}
             <ThemeSwitcher />
-          </div> */}
+          </div>
         </header>
 
-        <main className="m-5 lg:mx-20 lg:my-5 flex-1 overflow-auto">
-          {children}
-        </main>
+        <main className="m-3 flex-1 overflow-auto">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );
