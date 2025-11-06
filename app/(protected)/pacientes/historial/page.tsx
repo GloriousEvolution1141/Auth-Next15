@@ -1,3 +1,3 @@
 export default function historial() {
-  return;
+  return <h1>Welcome to page!</h1>;
 }
