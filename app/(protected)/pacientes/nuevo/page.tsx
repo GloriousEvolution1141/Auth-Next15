@@ -1,7 +1,7 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { User, HeartPulse, Cigarette } from "lucide-react";
 
-export default function FormularioOdontologicoMaquetado() {
+export default function NuevoPaciente() {
   return (
     <div className="p-4">
       {/* Grid con 3 columnas en pantallas medianas, 1 columna en móviles */}
