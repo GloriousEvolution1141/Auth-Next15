@@ -3,32 +3,33 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { LoginForm } from "@/components/login-form";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function Page() {
   const [showPanel, setShowPanel] = useState(false);
 
   return (
     <div className="relative grid min-h-svh w-full grid-cols-1 md:grid-cols-2 overflow-hidden">
-      {/* Columna izquierda: Login */}
       <div className="flex items-center justify-center p-6 md:p-10 bg-background z-10">
-        <div className="w-full max-w-sm">
-          <LoginForm
-            onLoginSuccess={() => setShowPanel(true)} // Solo muestra el panel
-          />
+        <div className="w-full max-w-sm space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-center text-2xl font-bold">
+                Sistema de Gestión Odontológica
+              </CardTitle>
+            </CardHeader>
+          </Card>
+          <LoginForm onLoginSuccess={() => setShowPanel(true)} />
         </div>
       </div>
 
-      {/* Columna derecha: información o branding */}
       <div className="hidden md:flex items-center justify-center bg-muted">
         <div className="text-center p-10">
-          <h2 className="text-2xl font-semibold mb-4">Bienvenido al sistema</h2>
-          <p className="text-muted-foreground">
-            Aquí puedes colocar una imagen, una descripción o tu branding.
-          </p>
+          <h2 className="text-2xl font-semibold mb-4">Foto del Sistema</h2>
+          <p className="text-muted-foreground">webp</p>
         </div>
       </div>
 
-      {/* Panel translúcido con efecto difuminado */}
       <AnimatePresence>
         {showPanel && (
           <motion.div
