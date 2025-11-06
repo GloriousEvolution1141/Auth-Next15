@@ -1,3 +1,4 @@
+// LoginForm.tsx
 "use client";
 
 import { cn } from "@/lib/utils";
@@ -16,10 +17,15 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+interface LoginFormProps extends React.ComponentPropsWithoutRef<"div"> {
+  onLoginSuccess?: () => void; // <-- nueva prop opcional
+}
+
 export function LoginForm({
   className,
+  onLoginSuccess,
   ...props
-}: React.ComponentPropsWithoutRef<"div">) {
+}: LoginFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -38,10 +44,16 @@ export function LoginForm({
         password,
       });
       if (error) throw error;
-      // Update this route to redirect to an authenticated route. The user already has an active session.
-      router.push("/home");
+
+      // Notifica al padre que el login fue exitoso
+      if (onLoginSuccess) onLoginSuccess();
+
+      // (Opcional) redirige después de un pequeño delay
+      setTimeout(() => {
+        router.push("/home");
+      }, 2000); // espera 2 segundos para que se vea la animación
     } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : "An error occurred");
+      setError(error instanceof Error ? error.message : "Ocurrió un error");
     } finally {
       setIsLoading(false);
     }
@@ -93,15 +105,6 @@ export function LoginForm({
                 {isLoading ? "Iniciando Sesión..." : "Iniciar Sesión"}
               </Button>
             </div>
-            {/* <div className="mt-4 text-center text-sm">
-              Don&apos;t have an account?{" "}
-              <Link
-                href="/auth/sign-up"
-                className="underline underline-offset-4"
-              >
-                Sign up
-              </Link>
-            </div> */}
           </form>
         </CardContent>
       </Card>
