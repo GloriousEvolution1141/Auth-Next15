@@ -24,7 +24,7 @@ export default function PatologiaForm() {
 
   const cards: CardData[] = [
     {
-      title: "Cardiovascular",
+      title: "a. Cardiovascular",
       options: [
         "Arritmias",
         "Cardiopatía Isquémica",
@@ -34,11 +34,11 @@ export default function PatologiaForm() {
       ],
     },
     {
-      title: "Respiratorio",
+      title: "b. Respiratorio",
       options: ["Asma", "EPOC", "Apnea del sueño", "Tuberculosis"],
     },
     {
-      title: "Endocrino/Metabólico",
+      title: "c. Endocrino/Metabólico",
       options: [
         "Diabetes tipo",
         "Tiroides: Hipo",
@@ -47,7 +47,7 @@ export default function PatologiaForm() {
       ],
     },
     {
-      title: "Neurológico/Psiquiátrico",
+      title: "d. Neurológico/Psiquiátrico",
       options: [
         "Epilepsia",
         "Alzheimer",
@@ -56,16 +56,16 @@ export default function PatologiaForm() {
       ],
     },
     {
-      title: "Hematológico/Inmunológico",
+      title: "e. Hematológico/Inmunológico",
       options: ["Anemia", "Hemofilia", "VIH/SIDA", "Enf. Autoinmunes"],
     },
     {
-      title: "Digestivo/Hepático",
+      title: "f. Digestivo/Hepático",
       options: ["Reflujo", "Úlcera Gástrica", "Hepatitis"],
     },
-    { title: "Renal", options: ["Insuficiencia Renal", "Diálisis"] },
+    { title: "g. Renal", options: ["Insuficiencia Renal", "Diálisis"] },
     {
-      title: "Alergias",
+      title: "h. Alergias",
       options: [
         "Penicilina",
         "Sulfas",
@@ -75,7 +75,7 @@ export default function PatologiaForm() {
       ],
     },
     {
-      title: "Otros Relevantes",
+      title: "i. Otros Relevantes",
       options: ["Cáncer", "Embarazo actual", "Prótesis articulares"],
     },
   ];

@@ -41,8 +41,11 @@ export default async function ProtectedLayout({
             <ThemeSwitcher />
           </div>
         </header>
-        <main className="m-3 flex-1 overflow-auto">{children}</main>
-        <footer className="border-t border-gray-200 bg-gray-50 px-6 py-4">
+        <main className="m-3 flex-1 overflow-auto">
+          {" "}
+          <div className="p-4">{children}</div>
+        </main>
+        <footer className="border-t border-gray-200 bg-gray-50 px-6 py-4 dark: bg-transparent">
           <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-center items-center gap-2">
             <span className="text-sm text-gray-500">
               © 2025 Glorious. Todos los derechos reservados.

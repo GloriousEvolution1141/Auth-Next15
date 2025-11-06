@@ -64,7 +64,7 @@ export default function Lista() {
   ];
 
   return (
-    <Card className="w-full border border-gray-200 shadow-sm">
+    <Card className="w-full border border-blue-200 shadow-sm">
       <CardHeader>
         <CardTitle>Listado de Pacientes</CardTitle>
         <CardDescription>
