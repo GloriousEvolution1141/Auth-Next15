@@ -10,9 +10,9 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar, // 👈 añadido
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
-import { useSidebar } from "@/components/ui/sidebar";
 
 interface NavItem {
   title: string;
@@ -24,18 +24,18 @@ interface NavItem {
 interface NavMainProps {
   items: NavItem[];
   basePath?: string;
+  onItemClick?: () => void; // ✅ Agregado
 }
 
-// 🔹 Mapa de etiquetas amigables
 const labelMap: Record<string, string> = {
   "/home": "Inicio",
 };
 
 const STORAGE_KEY = "sidebar-open-v5";
 
-export function NavMain({ items, basePath = "" }: NavMainProps) {
+export function NavMain({ items, basePath = "", onItemClick }: NavMainProps) {
   const segments = useSelectedLayoutSegments();
-  const { state } = useSidebar();
+  const { state, toggleSidebar } = useSidebar(); // 👈 ahora usamos toggleSidebar
   const isCollapsed = state === "collapsed";
 
   const [openSection, setOpenSection] = React.useState<string | null>(null);
@@ -71,6 +71,13 @@ export function NavMain({ items, basePath = "" }: NavMainProps) {
   const toggleSection = (title: string) => {
     if (isCollapsed) return;
     setOpenSection((prev) => (prev === title ? null : title));
+  };
+
+  // 👇 función para cerrar el sidebar solo en móvil
+  const handleLinkClick = () => {
+    if (window.innerWidth < 768) {
+      toggleSidebar();
+    }
   };
 
   return (
@@ -109,6 +116,7 @@ export function NavMain({ items, basePath = "" }: NavMainProps) {
                 <SidebarMenuButton asChild>
                   <Link
                     href={section.url || "/"}
+                    onClick={handleLinkClick} // 👈 cierre automático en móvil
                     className={cn(
                       "flex w-full items-center gap-2 px-3 py-1.5 rounded-md text-sm transition-colors",
                       segments.join("/") ===
@@ -127,7 +135,7 @@ export function NavMain({ items, basePath = "" }: NavMainProps) {
               {hasChildren && (
                 <div
                   className={cn(
-                    "ml-5 mt-1 space-y-1 transition-all duration-500 ease-&lsqb;cubic-bezier(0.4,0,0.2,1)&rsqb;",
+                    "ml-5 mt-1 space-y-1 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]",
                     isOpen && !isCollapsed
                       ? "max-h-[500px] opacity-100"
                       : "max-h-0 opacity-0 overflow-hidden"
@@ -142,6 +150,7 @@ export function NavMain({ items, basePath = "" }: NavMainProps) {
                         <Link
                           key={item.title}
                           href={href}
+                          onClick={handleLinkClick} // 👈 también en subitems
                           className={cn(
                             "block rounded-md px-3 py-1.5 text-sm transition-colors",
                             active

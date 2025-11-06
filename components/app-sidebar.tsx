@@ -23,13 +23,13 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
+  useSidebar, // 👈 importante
 } from "@/components/ui/sidebar";
 
 const data = {
   user: {
     name: "shadcn",
     email: "m@example.com",
-    // avatar: "/avatars/shadcn.jpg",
     avatar: "",
   },
   teams: [
@@ -50,18 +50,9 @@ const data = {
       url: "/pacientes",
       icon: Users,
       items: [
-        {
-          title: "Lista de pacientes",
-          url: "/pacientes/lista",
-        },
-        {
-          title: "Registrar paciente",
-          url: "/pacientes/nuevo",
-        },
-        {
-          title: "Historial clínico",
-          url: "/pacientes/historial",
-        },
+        { title: "Lista de pacientes", url: "/pacientes/lista" },
+        { title: "Registrar paciente", url: "/pacientes/nuevo" },
+        { title: "Historial clínico", url: "/pacientes/historial" },
       ],
     },
     {
@@ -69,18 +60,9 @@ const data = {
       url: "/citas",
       icon: Calendar,
       items: [
-        {
-          title: "Calendario",
-          url: "/citas/calendario",
-        },
-        {
-          title: "Agendar cita",
-          url: "/citas/nueva",
-        },
-        {
-          title: "Citas pasadas",
-          url: "/citas/historial",
-        },
+        { title: "Calendario", url: "/citas/calendario" },
+        { title: "Agendar cita", url: "/citas/nueva" },
+        { title: "Citas pasadas", url: "/citas/historial" },
       ],
     },
     {
@@ -88,14 +70,8 @@ const data = {
       url: "/odontograma",
       icon: Album,
       items: [
-        {
-          title: "Odontograma actual",
-          url: "/odontograma/actual",
-        },
-        {
-          title: "Historial de tratamientos",
-          url: "/odontograma/historial",
-        },
+        { title: "Odontograma actual", url: "/odontograma/actual" },
+        { title: "Historial de tratamientos", url: "/odontograma/historial" },
       ],
     },
     {
@@ -103,14 +79,8 @@ const data = {
       url: "/tratamientos",
       icon: ClipboardList,
       items: [
-        {
-          title: "Lista de tratamientos",
-          url: "/tratamientos/lista",
-        },
-        {
-          title: "Nuevo tratamiento",
-          url: "/tratamientos/nuevo",
-        },
+        { title: "Lista de tratamientos", url: "/tratamientos/lista" },
+        { title: "Nuevo tratamiento", url: "/tratamientos/nuevo" },
       ],
     },
     {
@@ -118,14 +88,8 @@ const data = {
       url: "/reportes",
       icon: BarChart3,
       items: [
-        {
-          title: "Financieros",
-          url: "/reportes/financieros",
-        },
-        {
-          title: "Pacientes atendidos",
-          url: "/reportes/pacientes",
-        },
+        { title: "Financieros", url: "/reportes/financieros" },
+        { title: "Pacientes atendidos", url: "/reportes/pacientes" },
       ],
     },
     {
@@ -133,14 +97,8 @@ const data = {
       url: "/configuracion",
       icon: Settings,
       items: [
-        {
-          title: "Usuarios y roles",
-          url: "/configuracion/usuarios",
-        },
-        {
-          title: "Perfil del doctor",
-          url: "/configuracion/perfil",
-        },
+        { title: "Usuarios y roles", url: "/configuracion/usuarios" },
+        { title: "Perfil del doctor", url: "/configuracion/perfil" },
       ],
     },
     {
@@ -148,14 +106,8 @@ const data = {
       url: "/admin",
       icon: UserCog,
       items: [
-        {
-          title: "Gestión de personal",
-          url: "/admin/personal",
-        },
-        {
-          title: "Logs del sistema",
-          url: "/admin/logs",
-        },
+        { title: "Gestión de personal", url: "/admin/personal" },
+        { title: "Logs del sistema", url: "/admin/logs" },
       ],
     },
     {
@@ -167,36 +119,44 @@ const data = {
           title: "Consentimientos informados",
           url: "/documentos/consentimientos",
         },
-        {
-          title: "Recetas y certificados",
-          url: "/documentos/recetas",
-        },
+        { title: "Recetas y certificados", url: "/documentos/recetas" },
       ],
     },
   ],
 };
 
 export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
-  // 👇 importante: evitar SSR para componentes Radix
   const [mounted, setMounted] = React.useState(false);
+  const { toggleSidebar } = useSidebar(); // 👈 usamos el hook del sidebar
+
   React.useEffect(() => setMounted(true), []);
 
   if (!mounted) {
-    // Evita que el HTML SSR no coincida con el cliente
     return null;
   }
+
+  // 👇 función: cierra sidebar solo si estamos en móvil
+  const handleNavClick = () => {
+    if (window.innerWidth < 768) {
+      toggleSidebar();
+    }
+  };
 
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
+
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        {/* pasamos handleNavClick a NavMain */}
+        <NavMain items={data.navMain} onItemClick={handleNavClick} />
       </SidebarContent>
+
       <SidebarFooter>
         <NavUser user={data.user} />
       </SidebarFooter>
+
       <SidebarRail />
     </Sidebar>
   );
