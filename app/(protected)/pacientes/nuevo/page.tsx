@@ -1,21 +1,28 @@
 "use client";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
 import { User, HeartPulse, Cigarette } from "lucide-react";
 import FiliacionForm from "@/components/filiacion-form";
 import HabitosForm from "@/components/habitos-form";
 import PatologiaForm from "@/components/patologia-form";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 
 export default function NuevoPaciente() {
   return (
-    <div className="grid grid-cols-[auto_1fr] gap-8">
+    <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-8">
       {/* Columna 1: Filiación + Hábitos */}
-      <div className="flex flex-col gap-4">
-        <Card className="bg-blue-10 border border-blue-200">
+      <div className="flex flex-col gap-4 order-1 md:order-1">
+        {/* Filiación */}
+        <Card className="bg-blue-10 border border-blue-200 order-1 md:order-none">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <User className="w-5 h-5 text-blue-600" />
-              <span className="font-semibold">1.</span>
               Filiación del Paciente
             </CardTitle>
           </CardHeader>
@@ -24,11 +31,11 @@ export default function NuevoPaciente() {
           </CardContent>
         </Card>
 
-        <Card className="bg-purple-10 border border-purple-200">
+        {/* Hábitos */}
+        <Card className="bg-purple-10 border border-purple-200 order-3 md:order-none">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Cigarette className="w-5 h-5 text-purple-600" />
-              <span className="font-semibold">3.</span>
               Hábitos
             </CardTitle>
           </CardHeader>
@@ -39,13 +46,12 @@ export default function NuevoPaciente() {
       </div>
 
       {/* Columna 2: Patología + Acciones */}
-      <div className="flex flex-col gap-4 items-start">
+      <div className="flex flex-col gap-4 items-start order-2 md:order-2">
         {/* Patología */}
-        <Card className="w-full bg-red-10 border border-red-200 ">
+        <Card className="w-full bg-red-10 border border-red-200 order-2 md:order-none">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <HeartPulse className="w-5 h-5 text-red-600" />
-              <span className="font-semibold">2.</span>
               Antecedentes Patológicos
             </CardTitle>
           </CardHeader>
@@ -54,20 +60,33 @@ export default function NuevoPaciente() {
           </CardContent>
         </Card>
 
-        {/* Acciones: solo lo justo */}
-        <Card className="w-full">
+        {/* Acciones */}
+        <Card className="w-full order-4 md:order-none">
           <CardHeader>
             <CardTitle>Acciones</CardTitle>
           </CardHeader>
-          <CardContent className="flex gap-4 justify-end">
-            <Button variant="outline" type="button">
+          <CardContent className="flex flex-col md:flex-row gap-2 md:gap-4 w-full justify-end">
+            <Separator />
+          </CardContent>
+          <CardFooter className="flex flex-col md:flex-row gap-2 md:gap-4 w-full justify-end">
+            <Button
+              className="w-full md:w-auto"
+              variant="outline"
+              type="button"
+            >
               Imprimir Ficha
             </Button>
-            <Button variant="outline" type="button">
+            <Button
+              className="w-full md:w-auto"
+              variant="outline"
+              type="button"
+            >
               Cancelar
             </Button>
-            <Button type="submit">Guardar Ficha</Button>
-          </CardContent>
+            <Button className="w-full md:w-auto" type="submit">
+              Guardar Ficha
+            </Button>
+          </CardFooter>
         </Card>
       </div>
     </div>
