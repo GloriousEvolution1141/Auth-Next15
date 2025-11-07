@@ -30,33 +30,35 @@ export default function HabitosForm() {
             <div className="flex flex-col gap-4">
               {" "}
               {/* Tabaco */}
-              <Field>
-                <FieldLabel htmlFor="tabaco">Tabaco</FieldLabel>
-                <Select defaultValue="">
-                  <SelectTrigger id="tabaco">
-                    <SelectValue placeholder="Seleccione..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="nunca">Nunca</SelectItem>
-                    <SelectItem value="ex-fumador">Ex fumador</SelectItem>
-                    <SelectItem value="actual">Actual</SelectItem>
-                  </SelectContent>
-                </Select>
-              </Field>
-              {/* Alcohol */}
-              <Field>
-                <FieldLabel htmlFor="alcohol">Alcohol</FieldLabel>
-                <Select defaultValue="">
-                  <SelectTrigger id="alcohol">
-                    <SelectValue placeholder="Seleccione..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="nunca">Nunca</SelectItem>
-                    <SelectItem value="ocasional">Ocasional</SelectItem>
-                    <SelectItem value="frecuente">Frecuente</SelectItem>
-                  </SelectContent>
-                </Select>
-              </Field>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Field>
+                  <FieldLabel htmlFor="tabaco">Tabaco</FieldLabel>
+                  <Select defaultValue="">
+                    <SelectTrigger id="tabaco">
+                      <SelectValue placeholder="Seleccione..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="nunca">Nunca</SelectItem>
+                      <SelectItem value="ex-fumador">Ex fumador</SelectItem>
+                      <SelectItem value="actual">Actual</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </Field>
+                {/* Alcohol */}
+                <Field>
+                  <FieldLabel htmlFor="alcohol">Alcohol</FieldLabel>
+                  <Select defaultValue="">
+                    <SelectTrigger id="alcohol">
+                      <SelectValue placeholder="Seleccione..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="nunca">Nunca</SelectItem>
+                      <SelectItem value="ocasional">Ocasional</SelectItem>
+                      <SelectItem value="frecuente">Frecuente</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </Field>
+              </div>
               {/* Drogas recreacionales */}
               <Field
                 orientation="horizontal"

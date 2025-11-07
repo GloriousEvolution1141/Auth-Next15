@@ -44,12 +44,14 @@ export default function NuevoPaciente() {
             </CardTitle>
           </CardHeader>
           <CardContent>
+            <Separator />
+
             <FiliacionForm />
           </CardContent>
         </Card>
 
         {/* Hábitos */}
-        <Card className="bg-purple-10 border border-purple-200 order-3 md:order-none">
+        <Card className="bg-purple-10 border border-purple-200 order-3 md:order-none h-full">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Cigarette className="w-5 h-5 text-purple-600" />
@@ -57,6 +59,8 @@ export default function NuevoPaciente() {
             </CardTitle>
           </CardHeader>
           <CardContent>
+            <Separator />
+
             <HabitosForm />
           </CardContent>
         </Card>
@@ -72,6 +76,7 @@ export default function NuevoPaciente() {
             </CardTitle>
           </CardHeader>
           <CardContent>
+            <Separator />
             <PatologiaForm />
           </CardContent>
         </Card>
