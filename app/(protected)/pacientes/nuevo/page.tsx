@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Card,
   CardHeader,
@@ -13,7 +14,23 @@ import PatologiaForm from "@/components/patologia-form";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
+// 🔔 Importa tu utilidad de toasts centralizada
+import { toastGuardar } from "@/components/utils/toast";
+
 export default function NuevoPaciente() {
+  // 🧩 Evento de guardar usando toast.ts
+  const handleGuardar = async () => {
+    await toastGuardar(
+      () =>
+        new Promise((resolve) => {
+          setTimeout(() => {
+            resolve({ name: "Ficha médica" });
+          }, 2000);
+        }),
+      "Ficha médica"
+    );
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-8">
       {/* Columna 1: Filiación + Hábitos */}
@@ -47,7 +64,6 @@ export default function NuevoPaciente() {
 
       {/* Columna 2: Patología + Acciones */}
       <div className="flex flex-col gap-4 items-start order-2 md:order-2">
-        {/* Patología */}
         <Card className="w-full bg-red-10 border border-red-200 order-2 md:order-none">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -65,25 +81,17 @@ export default function NuevoPaciente() {
           <CardHeader>
             <CardTitle>Acciones</CardTitle>
           </CardHeader>
-          <CardContent className="flex flex-col md:flex-row gap-2 md:gap-4 w-full justify-end">
+          <CardContent>
             <Separator />
           </CardContent>
           <CardFooter className="flex flex-col md:flex-row gap-2 md:gap-4 w-full justify-end">
-            <Button
-              className="w-full md:w-auto"
-              variant="outline"
-              type="button"
-            >
+            <Button variant="outline" type="button">
               Imprimir Ficha
             </Button>
-            <Button
-              className="w-full md:w-auto"
-              variant="outline"
-              type="button"
-            >
+            <Button variant="outline" type="button">
               Cancelar
             </Button>
-            <Button className="w-full md:w-auto" type="submit">
+            <Button onClick={handleGuardar} type="button">
               Guardar Ficha
             </Button>
           </CardFooter>

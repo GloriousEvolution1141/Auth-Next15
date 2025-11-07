@@ -2,6 +2,8 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { hasEnvVars } from "@/lib/utils";
 
+import { ToasterClient } from "@/components/ui/toasteClient"; // 👈 Importa el wrapper cliente
+
 import { AppSidebar } from "@/components/app-sidebar";
 import {
   SidebarInset,
@@ -69,6 +71,7 @@ export default async function ProtectedLayout({
             </div> */}
           </div>
         </footer>
+        <ToasterClient />
       </SidebarInset>
     </SidebarProvider>
   );
