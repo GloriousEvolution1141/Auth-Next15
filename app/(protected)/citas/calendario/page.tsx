@@ -111,13 +111,13 @@ export default function CalendarioCitas() {
         <div className="grid grid-cols-3 grid-rows-3 gap-6 h-[67vh]">
           {/* 🗓️ Calendario */}
           <div className="col-start-1 col-end-3 row-start-1 row-end-4">
-            <Card className="h-full bg-blue-50 dark:bg-transparent border border-blue-200 dark:border-blue-700 flex flex-col">
-              <CardHeader>
+            <Card className="h-[67vh] p-6 bg-blue-50 dark:bg-transparent border border-blue-200 dark:border-blue-700 flex flex-col">
+              {/* <CardHeader>
                 <CardTitle>Calendario Conectado a Google Calendar</CardTitle>
-              </CardHeader>
-              <CardContent className="flex-1">
+              </CardHeader> */}
+              <div className="flex flex-col items-center justify-center flex-grow">
                 <CalendarioGoogle embedUrl="https://calendar.google.com/calendar/embed?src=tu_calendario_id&ctz=America%2FLima" />
-              </CardContent>
+              </div>
             </Card>
           </div>
 

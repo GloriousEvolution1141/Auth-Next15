@@ -28,8 +28,8 @@ import {
 
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
+    name: "Administrador",
+    email: "admin@gmail.com",
     avatar: "",
   },
   teams: [
@@ -89,7 +89,7 @@ const data = {
       icon: BarChart3,
       items: [
         { title: "Financieros", url: "/reportes/financieros" },
-        { title: "Pacientes atendidos", url: "/reportes/pacientes" },
+        // { title: "Pacientes atendidos", url: "/reportes/pacientes" },
       ],
     },
     {
