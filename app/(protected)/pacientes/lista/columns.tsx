@@ -1,16 +1,36 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-
-import { Badge } from "@/components/ui/badge";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Badge } from "@/components/ui/badge";
 
-import { labels, priorities, statuses } from "./data/data";
-import { Task } from "./data/schema";
-import { DataTableColumnHeader } from "@/components/ui/data-table-column-header";
-import { DataTableRowActions } from "@/components/ui/data-table-row-actions";
+export type Paciente = {
+  id: string;
+  nombres: string;
+  apellidos: string;
+  fecha_nacimiento: string;
+  dni: string;
+  genero?: string | null;
+  telefono?: string | null;
+  email?: string | null;
+  direccion?: string | null;
+  alerta_medica?: string | null;
+  estado_civil?: string | null;
+  creado_en?: string | null;
+  estado?: "Activo" | "Inactivo";
+};
 
-export const columns: ColumnDef<Task>[] = [
+export const columns: ColumnDef<Paciente>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -20,104 +40,107 @@ export const columns: ColumnDef<Task>[] = [
           (table.getIsSomePageRowsSelected() && "indeterminate")
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-        className="translate-y-[2px]"
+        aria-label="Seleccionar todo"
       />
     ),
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-        className="translate-y-[2px]"
+        aria-label="Seleccionar fila"
       />
     ),
     enableSorting: false,
     enableHiding: false,
   },
+
   {
-    accessorKey: "id",
+    accessorKey: "nombres",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Task" />
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Nombres <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
     ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
-    enableSorting: false,
-    enableHiding: false,
+    cell: ({ row }) => (
+      <span className="font-medium">{row.getValue("nombres")}</span>
+    ),
   },
   {
-    accessorKey: "title",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Title" />
+    accessorKey: "apellidos",
+    header: "Apellidos",
+    cell: ({ row }) => <span>{row.getValue("apellidos")}</span>,
+  },
+
+  {
+    accessorKey: "dni",
+    header: "DNI",
+    cell: ({ row }) => <span>{row.getValue("dni")}</span>,
+  },
+
+  {
+    accessorKey: "telefono",
+    header: "Teléfono",
+    cell: ({ row }) => <span>{row.getValue("telefono") ?? "-"}</span>,
+  },
+
+  {
+    accessorKey: "email",
+    header: "Email",
+    cell: ({ row }) => (
+      <span className="lowercase">{row.getValue("email") ?? "-"}</span>
     ),
+  },
+
+  {
+    accessorKey: "genero",
+    header: "Género",
+    cell: ({ row }) => <span>{row.getValue("genero") ?? "-"}</span>,
+  },
+
+  {
+    accessorKey: "estado",
+    header: "Estado",
     cell: ({ row }) => {
-      const label = labels.find((label) => label.value === row.original.label);
+      const estado = (row.getValue("estado") as Paciente["estado"]) || "Activo";
+
+      const variants: Record<string, string> = {
+        Activo:
+          "bg-green-100 text-green-800 border border-green-400 hover:bg-green-100",
+        Inactivo:
+          "bg-red-100 text-red-800 border border-red-400 hover:bg-red-100",
+      };
 
       return (
-        <div className="flex gap-2">
-          {label && <Badge variant="outline">{label.label}</Badge>}
-          <span className="max-w-[500px] truncate font-medium">
-            {row.getValue("title")}
-          </span>
-        </div>
+        <Badge className={`${variants[estado]} capitalize`}>{estado}</Badge>
       );
     },
   },
-  {
-    accessorKey: "status",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Status" />
-    ),
-    cell: ({ row }) => {
-      const status = statuses.find(
-        (status) => status.value === row.getValue("status")
-      );
 
-      if (!status) {
-        return null;
-      }
-
-      return (
-        <div className="flex w-[100px] items-center gap-2">
-          {status.icon && (
-            <status.icon className="text-muted-foreground size-4" />
-          )}
-          <span>{status.label}</span>
-        </div>
-      );
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
-    },
-  },
-  {
-    accessorKey: "priority",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Priority" />
-    ),
-    cell: ({ row }) => {
-      const priority = priorities.find(
-        (priority) => priority.value === row.getValue("priority")
-      );
-
-      if (!priority) {
-        return null;
-      }
-
-      return (
-        <div className="flex items-center gap-2">
-          {priority.icon && (
-            <priority.icon className="text-muted-foreground size-4" />
-          )}
-          <span>{priority.label}</span>
-        </div>
-      );
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
-    },
-  },
   {
     id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    enableHiding: false,
+    cell: ({ row }) => {
+      const paciente = row.original;
+
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Abrir menú</span>
+              <MoreHorizontal />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Acciones</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Ver detalles</DropdownMenuItem>
+            <DropdownMenuItem>Editar paciente</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    },
   },
 ];

@@ -42,7 +42,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="flex flex-col space-y-6">
       {/* Grid de Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {cardsData.map((card, index) => (
@@ -63,16 +63,16 @@ export default function Home() {
 
       {/* Sección del calendario y espacio para otra cosa */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Calendario ocupa la mitad */}
-        <Card className="p-2 bg-blue-50 dark:bg-transparent border border-blue-200 dark:border-blue-700">
+        <Card className="h-[60vh] p-2 bg-blue-50 dark:bg-transparent border border-blue-200 dark:border-blue-700 flex flex-col">
           <CardHeader>
             <CardTitle>Calendario Conectado a Google Calendar</CardTitle>
           </CardHeader>
-          <CalendarioGoogle embedUrl="https://calendar.google.com/calendar/embed?src=tu_calendario_id&ctz=America%2FLima" />
+          <CardContent className="flex-grow">
+            <CalendarioGoogle embedUrl="https://calendar.google.com/calendar/embed?src=tu_calendario_id&ctz=America%2FLima" />
+          </CardContent>
         </Card>
 
-        {/* Espacio para otro contenido */}
-        <Card className="p-2 flex items-center justify-center border border-neutral-300 dark:border-neutral-700 dark:bg-transparent">
+        <Card className="h-[60vh] p-2 flex items-center justify-center border border-neutral-300 dark:border-neutral-700 dark:bg-transparent">
           <p>Otro componente o contenido aquí</p>
         </Card>
       </div>

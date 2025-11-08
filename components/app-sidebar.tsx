@@ -52,7 +52,7 @@ const data = {
       items: [
         { title: "Lista de pacientes", url: "/pacientes/lista" },
         { title: "Registrar paciente", url: "/pacientes/nuevo" },
-        { title: "Historial clínico", url: "/pacientes/historial" },
+        // { title: "Historial clínico", url: "/pacientes/historial" },
       ],
     },
     {
@@ -65,15 +65,15 @@ const data = {
         { title: "Citas pasadas", url: "/citas/historial" },
       ],
     },
-    {
-      title: "Odontograma",
-      url: "/odontograma",
-      icon: Album,
-      items: [
-        { title: "Odontograma actual", url: "/odontograma/actual" },
-        { title: "Historial de tratamientos", url: "/odontograma/historial" },
-      ],
-    },
+    // {
+    //   title: "Odontograma",
+    //   url: "/odontograma",
+    //   icon: Album,
+    //   items: [
+    //     { title: "Odontograma actual", url: "/odontograma/actual" },
+    //     { title: "Historial de tratamientos", url: "/odontograma/historial" },
+    //   ],
+    // },
     {
       title: "Tratamientos",
       url: "/tratamientos",
@@ -101,27 +101,27 @@ const data = {
         { title: "Perfil del doctor", url: "/configuracion/perfil" },
       ],
     },
-    {
-      title: "Administración",
-      url: "/admin",
-      icon: UserCog,
-      items: [
-        { title: "Gestión de personal", url: "/admin/personal" },
-        { title: "Logs del sistema", url: "/admin/logs" },
-      ],
-    },
-    {
-      title: "Documentos",
-      url: "/documentos",
-      icon: FileText,
-      items: [
-        {
-          title: "Consentimientos informados",
-          url: "/documentos/consentimientos",
-        },
-        { title: "Recetas y certificados", url: "/documentos/recetas" },
-      ],
-    },
+    // {
+    //   title: "Administración",
+    //   url: "/admin",
+    //   icon: UserCog,
+    //   items: [
+    //     { title: "Gestión de personal", url: "/admin/personal" },
+    //     { title: "Logs del sistema", url: "/admin/logs" },
+    //   ],
+    // },
+    // {
+    //   title: "Documentos",
+    //   url: "/documentos",
+    //   icon: FileText,
+    //   items: [
+    //     {
+    //       title: "Consentimientos informados",
+    //       url: "/documentos/consentimientos",
+    //     },
+    //     { title: "Recetas y certificados", url: "/documentos/recetas" },
+    //   ],
+    // },
   ],
 };
 
