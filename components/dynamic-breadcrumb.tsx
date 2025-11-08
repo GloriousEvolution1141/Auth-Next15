@@ -17,7 +17,7 @@ const breadcrumbMap: Record<string, string> = {
   pacientes: "Pacientes",
   lista: "Lista de pacientes",
   nuevo: "Registrar paciente",
-  historial: "Historial clínico",
+  historial: "Historial",
 };
 
 function formatSegment(segment: string) {

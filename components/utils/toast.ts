@@ -47,3 +47,10 @@ export async function toastEliminar<T>(
     error: `Error al eliminar ${nombre.toLowerCase()}.`,
   });
 }
+
+//Nueva función: marcar como atendida
+export function toastAtendida(nombre: string = "Cita") {
+  toast.info(`${nombre} marcada como atendida.`, {
+    description: "El estado se actualizó correctamente.",
+  });
+}

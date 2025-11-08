@@ -61,7 +61,7 @@ const data = {
       icon: Calendar,
       items: [
         { title: "Calendario", url: "/citas/calendario" },
-        { title: "Agendar cita", url: "/citas/nueva" },
+        // { title: "Agendar cita", url: "/citas/nueva" },
         { title: "Citas pasadas", url: "/citas/historial" },
       ],
     },
@@ -80,7 +80,7 @@ const data = {
       icon: ClipboardList,
       items: [
         { title: "Lista de tratamientos", url: "/tratamientos/lista" },
-        { title: "Nuevo tratamiento", url: "/tratamientos/nuevo" },
+        // { title: "Nuevo tratamiento", url: "/tratamientos/nuevo" },
       ],
     },
     {
