@@ -1,13 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Field,
-  FieldGroup,
-  FieldLabel,
-  FieldSet,
-  FieldSeparator,
-} from "@/components/ui/field";
+import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -17,23 +10,26 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Paciente } from "@/components/pacientes/paciente-detalle"; // importa tu tipo
 
-export default function HabitosForm() {
-  const [consumeDrogas, setConsumeDrogas] = useState(false);
+interface Props {
+  paciente: Paciente;
+}
+
+export default function HabitosForm({ paciente }: Props) {
+  const [consumeDrogas, setConsumeDrogas] = useState(!!paciente.consume_drogas);
 
   return (
     <div className="p-4 max-w-4xl mx-auto">
       <form>
         <FieldGroup>
           <FieldSet>
-            {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4"> */}
             <div className="flex flex-col gap-4">
-              {" "}
-              {/* Tabaco */}
+              {/* Tabaco y Alcohol */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Field>
                   <FieldLabel htmlFor="tabaco">Tabaco</FieldLabel>
-                  <Select defaultValue="">
+                  <Select defaultValue={paciente.tabaco ?? ""}>
                     <SelectTrigger id="tabaco">
                       <SelectValue placeholder="Seleccione..." />
                     </SelectTrigger>
@@ -44,10 +40,10 @@ export default function HabitosForm() {
                     </SelectContent>
                   </Select>
                 </Field>
-                {/* Alcohol */}
+
                 <Field>
                   <FieldLabel htmlFor="alcohol">Alcohol</FieldLabel>
-                  <Select defaultValue="">
+                  <Select defaultValue={paciente.alcohol ?? ""}>
                     <SelectTrigger id="alcohol">
                       <SelectValue placeholder="Seleccione..." />
                     </SelectTrigger>
@@ -59,6 +55,7 @@ export default function HabitosForm() {
                   </Select>
                 </Field>
               </div>
+
               {/* Drogas recreacionales */}
               <Field
                 orientation="horizontal"
@@ -75,26 +72,19 @@ export default function HabitosForm() {
                   Consume drogas recreacionales
                 </FieldLabel>
               </Field>
-              {/* Campo para detallar consumo, inicialmente deshabilitado */}
+
+              {/* Detalle del consumo */}
               <Field className="md:col-span-2">
                 <FieldLabel htmlFor="drogas-detalle">Detalle</FieldLabel>
                 <Input
                   id="drogas-detalle"
                   placeholder="Especifique el consumo"
-                  disabled={!consumeDrogas} // deshabilitado si checkbox no está activado
+                  disabled={!consumeDrogas}
+                  defaultValue={paciente.detalle_drogas ?? ""}
                 />
               </Field>
             </div>
           </FieldSet>
-
-          {/* <FieldSeparator />
-
-          <Field orientation="horizontal" className="mt-4">
-            <Button type="submit">Guardar</Button>
-            <Button variant="outline" type="button" className="ml-2">
-              Cancelar
-            </Button>
-          </Field> */}
         </FieldGroup>
       </form>
     </div>

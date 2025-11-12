@@ -17,8 +17,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { Paciente } from "@/components/pacientes/paciente-detalle"; // importa tu tipo
 
-export default function FiliacionForm() {
+interface Props {
+  paciente: Paciente;
+}
+
+export default function FiliacionForm({ paciente }: Props) {
   return (
     <div className="p-4 max-w-4xl mx-auto">
       <form>
@@ -32,7 +37,12 @@ export default function FiliacionForm() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Field>
                 <FieldLabel htmlFor="nombres">Nombres</FieldLabel>
-                <Input id="nombres" placeholder="Ingrese nombres" required />
+                <Input
+                  id="nombres"
+                  placeholder="Ingrese nombres"
+                  defaultValue={paciente.nombres}
+                  required
+                />
               </Field>
 
               <Field>
@@ -40,6 +50,18 @@ export default function FiliacionForm() {
                 <Input
                   id="apellidos"
                   placeholder="Ingrese apellidos"
+                  defaultValue={paciente.apellidos}
+                  required
+                />
+              </Field>
+
+              {/* Nuevo campo DNI */}
+              <Field>
+                <FieldLabel htmlFor="dni">DNI</FieldLabel>
+                <Input
+                  id="dni"
+                  placeholder="Ingrese DNI"
+                  defaultValue={paciente.dni ?? ""}
                   required
                 />
               </Field>
@@ -48,17 +70,45 @@ export default function FiliacionForm() {
                 <FieldLabel htmlFor="fechaNacimiento">
                   Fecha de Nacimiento
                 </FieldLabel>
-                <Input id="fechaNacimiento" type="date" required />
+                <Input
+                  id="fechaNacimiento"
+                  type="date"
+                  defaultValue={paciente.fecha_nacimiento}
+                  required
+                />
               </Field>
 
               <Field>
-                <FieldLabel htmlFor="ocupacion">Ocupación</FieldLabel>
-                <Input id="ocupacion" placeholder="Ingrese ocupación" />
+                <FieldLabel htmlFor="telefono">Teléfono</FieldLabel>
+                <Input
+                  id="telefono"
+                  placeholder="Ingrese teléfono"
+                  defaultValue={paciente.telefono ?? ""}
+                />
+              </Field>
+
+              <Field>
+                <FieldLabel htmlFor="email">Email</FieldLabel>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="Ingrese email"
+                  defaultValue={paciente.email ?? ""}
+                />
+              </Field>
+
+              <Field>
+                <FieldLabel htmlFor="direccion">Dirección</FieldLabel>
+                <Input
+                  id="direccion"
+                  placeholder="Ingrese dirección"
+                  defaultValue={paciente.direccion ?? ""}
+                />
               </Field>
 
               <Field>
                 <FieldLabel htmlFor="estadoCivil">Estado Civil</FieldLabel>
-                <Select defaultValue="">
+                <Select defaultValue={paciente.estado_civil ?? ""}>
                   <SelectTrigger id="estadoCivil">
                     <SelectValue placeholder="Seleccione" />
                   </SelectTrigger>
@@ -71,49 +121,17 @@ export default function FiliacionForm() {
                 </Select>
               </Field>
 
-              <Field>
-                <FieldLabel htmlFor="telefono">Teléfono</FieldLabel>
-                <Input id="telefono" placeholder="Ingrese teléfono" />
-              </Field>
-
-              <Field>
-                <FieldLabel htmlFor="email">Email</FieldLabel>
-                <Input id="email" type="email" placeholder="Ingrese email" />
-              </Field>
-
-              <Field>
-                <FieldLabel htmlFor="direccion">Dirección</FieldLabel>
-                <Input id="direccion" placeholder="Ingrese dirección" />
-              </Field>
-
-              <Field>
-                <FieldLabel htmlFor="procedencia">
-                  Lugar de Procedencia
-                </FieldLabel>
-                <Input
-                  id="procedencia"
-                  placeholder="Ingrese lugar de procedencia"
-                />
-              </Field>
-
               <Field className="md:col-span-2">
                 <FieldLabel htmlFor="alertaMedica">Alerta Médica</FieldLabel>
                 <Textarea
                   id="alertaMedica"
                   placeholder="Ingrese alerta médica"
                   className="resize-none"
+                  defaultValue={paciente.alerta_medica ?? ""}
                 />
               </Field>
             </div>
           </FieldSet>
-          {/* 
-          <FieldSeparator />
-          <Field orientation="horizontal" className="">
-            <Button type="submit">Guardar</Button>
-            <Button variant="outline" type="button" className="ml-2">
-              Cancelar
-            </Button>
-          </Field> */}
         </FieldGroup>
       </form>
     </div>

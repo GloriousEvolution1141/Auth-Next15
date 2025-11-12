@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { FieldSet } from "@/components/ui/field";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -16,22 +16,25 @@ interface CardData {
   title: string;
   options: string[];
 }
+interface PatologiaFormProps {
+  paciente?: {
+    antecedentes_patologicos?: any; // JSONB de la tabla pacientes
+  };
+}
 
-export default function PatologiaForm() {
+export default function PatologiaForm({ paciente }: PatologiaFormProps) {
+  const antecedentes_patologicos = paciente?.antecedentes_patologicos;
+
   const [noRefiere, setNoRefiere] = useState<Record<string, boolean>>({});
 
-  // --- Estados específicos para inputs condicionales ---
-  // Cardiovascular
+  // --- Todos los estados específicos como ya definiste ---
   const [hipertension, setHipertension] = useState(false);
   const [hipertensionTratamiento, setHipertensionTratamiento] = useState("");
-
   const [tomaAnticoagulantes, setTomaAnticoagulantes] = useState(false);
   const [anticoWarfarina, setAnticoWarfarina] = useState(false);
   const [anticoAAS, setAnticoAAS] = useState(false);
   const [anticoOtro, setAnticoOtro] = useState(false);
   const [anticoOtroText, setAnticoOtroText] = useState("");
-
-  // Endocrino/Metabólico
   const [diabetesTipo, setDiabetesTipo] = useState("");
   const [hba1c, setHba1c] = useState("");
   const [tiroides, setTiroides] = useState<{ hipo: boolean; hiper: boolean }>({
@@ -40,32 +43,95 @@ export default function PatologiaForm() {
   });
   const [osteoporosis, setOsteoporosis] = useState(false);
   const [tratamientoOsteoporosis, setTratamientoOsteoporosis] = useState("");
-
-  // Neurológico / Psiquiátrico
   const [medPsiquiatricos, setMedPsiquiatricos] = useState(false);
   const [medPsiquiatricosText, setMedPsiquiatricosText] = useState("");
-
-  // Digestivo / Hepático
   const [hepatitis, setHepatitis] = useState(false);
   const [hepatitisTipo, setHepatitisTipo] = useState("");
-
-  // Renal
   const [insuficienciaRenal, setInsuficienciaRenal] = useState(false);
   const [insuficienciaRenalEtapa, setInsuficienciaRenalEtapa] = useState("");
-
-  // Alergias
   const [anestLocal, setAnestLocal] = useState(false);
   const [anestLocalText, setAnestLocalText] = useState("");
   const [alimentos, setAlimentos] = useState(false);
   const [alimentosText, setAlimentosText] = useState("");
-
-  // Otros relevantes
   const [cancer, setCancer] = useState(false);
   const [cancerTipo, setCancerTipo] = useState("");
   const [embarazoActual, setEmbarazoActual] = useState(false);
   const [embarazoSemanas, setEmbarazoSemanas] = useState("");
   const [protesisArticulares, setProtesisArticulares] = useState(false);
   const [protesisFecha, setProtesisFecha] = useState("");
+
+  // --- Inicializar desde JSONB ---
+  useEffect(() => {
+    if (!antecedentes_patologicos) return;
+
+    setNoRefiere(antecedentes_patologicos.noRefiere || {});
+
+    setHipertension(
+      antecedentes_patologicos.cardiovascular?.hipertension || false
+    );
+    setHipertensionTratamiento(
+      antecedentes_patologicos.cardiovascular?.hipertensionTratamiento || ""
+    );
+    setTomaAnticoagulantes(
+      antecedentes_patologicos.cardiovascular?.tomaAnticoagulantes || false
+    );
+    setAnticoWarfarina(
+      antecedentes_patologicos.cardiovascular?.anticoagulantes?.warfarina ||
+        false
+    );
+    setAnticoAAS(
+      antecedentes_patologicos.cardiovascular?.anticoagulantes?.AAS || false
+    );
+    setAnticoOtro(
+      antecedentes_patologicos.cardiovascular?.anticoagulantes?.otro?.check ||
+        false
+    );
+    setAnticoOtroText(
+      antecedentes_patologicos.cardiovascular?.anticoagulantes?.otro?.text || ""
+    );
+
+    setDiabetesTipo(antecedentes_patologicos.endocrino?.diabetesTipo || "");
+    setHba1c(antecedentes_patologicos.endocrino?.hba1c || "");
+    setTiroides({
+      hipo: antecedentes_patologicos.endocrino?.tiroides?.hipo || false,
+      hiper: antecedentes_patologicos.endocrino?.tiroides?.hiper || false,
+    });
+    setOsteoporosis(antecedentes_patologicos.endocrino?.osteoporosis || false);
+    setTratamientoOsteoporosis(
+      antecedentes_patologicos.endocrino?.tratamientoOsteoporosis || ""
+    );
+
+    setMedPsiquiatricos(
+      antecedentes_patologicos.neurologico?.medPsiquiatricos || false
+    );
+    setMedPsiquiatricosText(
+      antecedentes_patologicos.neurologico?.medPsiquiatricosText || ""
+    );
+
+    setHepatitis(antecedentes_patologicos.digestivo?.hepatitis || false);
+    setHepatitisTipo(antecedentes_patologicos.digestivo?.hepatitisTipo || "");
+
+    setInsuficienciaRenal(
+      antecedentes_patologicos.renal?.insuficienciaRenal || false
+    );
+    setInsuficienciaRenalEtapa(
+      antecedentes_patologicos.renal?.insuficienciaRenalEtapa || ""
+    );
+
+    setAnestLocal(antecedentes_patologicos.alergias?.anestLocal || false);
+    setAnestLocalText(antecedentes_patologicos.alergias?.anestLocalText || "");
+    setAlimentos(antecedentes_patologicos.alergias?.alimentos || false);
+    setAlimentosText(antecedentes_patologicos.alergias?.alimentosText || "");
+
+    setCancer(antecedentes_patologicos.otros?.cancer || false);
+    setCancerTipo(antecedentes_patologicos.otros?.cancerTipo || "");
+    setEmbarazoActual(antecedentes_patologicos.otros?.embarazoActual || false);
+    setEmbarazoSemanas(antecedentes_patologicos.otros?.embarazoSemanas || "");
+    setProtesisArticulares(
+      antecedentes_patologicos.otros?.protesisArticulares || false
+    );
+    setProtesisFecha(antecedentes_patologicos.otros?.protesisFecha || "");
+  }, [antecedentes_patologicos]);
 
   const cards: CardData[] = [
     {
